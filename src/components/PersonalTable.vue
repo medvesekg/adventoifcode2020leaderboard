@@ -1,0 +1,125 @@
+<template>
+  <app-table :columns="columns" :rows="rows">
+    <template #column:name="{ value, row }">
+      <span :style="rowStyle(row)">
+        {{ value || "Segmentation fault (core dumped)" }}
+      </span>
+    </template>
+    <template #column:team="{ value }">
+      <span
+        v-if="value"
+        class="rounded px-2 py-1 text-white text-sm"
+        :style="`background-color:${value.color}`"
+        >{{ value.name }}</span
+      >
+    </template>
+    <template #column:avatar="{ value, row }">
+      <img
+        v-if="row.name"
+        :src="
+          value ||
+          'https://discord.com/assets/322c936a8c8be1b803cd94861bdfa868.png'
+        "
+        class="h-10 w-10 rounded-full"
+        style="width: 40px"
+      />
+      <span v-else>a̴̡̱̲̦̎̏̃͑͊̄́̀͛́̑͜͝ͅs̴̨͇͇͉̙̊̊̒̒͒̽̽̕͘͜͜ͅd̶̡̤̤̬̺͒́̅̔̈́́͘2̶̖̒͂̐͘1̷̠̪̘͕̦̳͙̦̬̞͇͇͆̈͐̀̃̐̓̑̆͛͂͜</span>
+    </template>
+    <template #column:starMeter="{ row }">
+      <star-meter :results="row.completion_day_level" />
+    </template>
+    <template #column:stars="{ row }">
+      <span class="fa-stack text-center">
+        <i class="fas fa-star fa-2x text-yellow-500"></i>
+        <span class="fa-layers-text text-lg font-bold text-gray-100">{{
+          row.stars
+        }}</span>
+      </span>
+    </template>
+  </app-table>
+</template>
+
+<script>
+import { defineComponent } from "vue";
+import StarMeter from "@/components/StarMeter.vue";
+import AppTable from "@/components/AppTable.vue"
+import { orderBy, get } from "lodash";
+
+export default defineComponent({
+  components: { StarMeter, AppTable },
+
+  data() {
+    return {
+      columns: [
+        {
+          label: "",
+          accessor: "avatar",
+          slot: "avatar",
+          name: "avatar",
+          orderable: false,
+          style: "width:50px",
+        },
+        {
+          label: "Name",
+          accessor: "name",
+          slot: "name",
+          name: "name",
+          orderable: false,
+          style: "width:300px",
+        },
+        {
+          label: "Team",
+          accessor: (row) =>
+            get(this.$store.state.departments, row.department_id),
+          slot: "team",
+          name: "team",
+          orderable: false,
+          style: "width:150px",
+        },
+        {
+          label: "Stars",
+          accessor: "stars",
+          slot: "starMeter",
+          name: "starMeter",
+          orderable: false,
+        },
+        {
+          label: "",
+          accessor: "stars",
+          slot: "stars",
+          name: "stars",
+          orderable: false,
+        },
+      ],
+    };
+  },
+
+  computed: {
+    rows() {
+      return orderBy(
+        Object.values(this.$store.getters.users),
+        ["stars", "local_score"],
+        ["desc", "desc"]
+      );
+    },
+  },
+
+  methods: {
+    rowStyle(row) {
+      let userId = row.userId;
+      let departmentId = this.$store.getters.users[userId].department_id;
+      if (departmentId) {
+        let department = this.$store.state.departments[departmentId];
+        return `color: ${department.color}`;
+      }
+    },
+
+    randomMemoryAddress() {
+      let random = Math.floor(Math.random() * 4000000);
+      return `0x` + padStart(random.toString(16), 8, "0");
+    },
+  },
+});
+</script>
+
+<style></style>

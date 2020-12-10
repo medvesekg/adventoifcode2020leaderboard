@@ -19,12 +19,15 @@
       />
     </template>
     <template #column:stars="{ row }">
-      <span class="fa-stack text-center">
+      <span class="fa-stack text-center" :key="row.id">
         <i class="fas fa-star fa-2x text-yellow-500"></i>
         <span class="fa-layers-text text-lg font-bold text-gray-100">{{
           row.stars
         }}</span>
       </span>
+    </template>
+    <template #column:avg_stars="{ value }">
+      {{ value.toFixed(2) }}
     </template>
   </app-table>
 </template>
@@ -57,11 +60,16 @@ export default defineComponent({
           orderable: false,
         },
         {
-          label: "Stars",
+          label: "Avg. per member",
+          accessor: "avg_stars",
+          slot: "avg_stars",
+          name: "avg_stars",
+        },
+        {
+          label: "Total stars",
           accessor: "stars",
           slot: "stars",
           name: "stars",
-          orderable: false,
         },
       ],
     };
@@ -72,14 +80,17 @@ export default defineComponent({
       let groupedUsers = groupBy(this.$store.getters.users, "department_id");
       let rows = Object.values(this.$store.state.departments).map(
         (department) => {
+          let stars = sumBy(groupedUsers[department.id], "stars")
+          let members = groupedUsers[department.id]
           return {
             ...department,
-            stars: sumBy(groupedUsers[department.id], "stars"),
-            members: groupedUsers[department.id],
+            stars: stars,
+            avg_stars: stars / members.length,
+            members: members,
           };
         }
       );
-      return orderBy(rows, ["stars"], ["desc"]);
+      return orderBy(rows, ["avg_stars", "stars"], ["desc", "desc"]);
     },
   },
 

@@ -1,7 +1,12 @@
 import { createStore } from "vuex";
 import { maxBy } from 'lodash'
 import data from "@/data/data";
+import { padStart } from 'lodash'
 
+function randomMemoryAddress() {
+  let random = Math.floor(Math.random() * 4000000);
+  return `0x` + padStart(random.toString(16), 8, "0");
+}
 
 let departments = {
   1: {
@@ -33,6 +38,11 @@ let departments = {
     id: 6,
     name: "Support",
     color: 'rgb(241, 196, 15)'
+  },
+  7: {
+    id: 7,
+    name: randomMemoryAddress(),
+    color: '#171717'
   }
 }
 
@@ -196,10 +206,14 @@ export default createStore({
     users(state) {
       let users = {}
       for (let userId in state.raw.members) {
-        users[userId] = {
+        let user = {
           ...usersAdditionalData[userId],
           ...state.raw.members[userId]
         }
+        if(!user.name) {
+          user.department_id = 7 
+        }
+        users[userId] = user
       }
       return users
     }

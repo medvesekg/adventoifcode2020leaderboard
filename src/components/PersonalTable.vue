@@ -23,7 +23,7 @@
         class="h-10 w-10 rounded-full"
         style="width: 40px"
       />
-      <span v-else>a̴̡̱̲̦̎̏̃͑͊̄́̀͛́̑͜͝ͅs̴̨͇͇͉̙̊̊̒̒͒̽̽̕͘͜͜ͅd̶̡̤̤̬̺͒́̅̔̈́́͘2̶̖̒͂̐͘1̷̠̪̘͕̦̳͙̦̬̞͇͇͆̈͐̀̃̐̓̑̆͛͂͜</span>
+      <span v-else>{{ zalgoText() }}</span>
     </template>
     <template #column:starMeter="{ row }">
       <star-meter :results="row.completion_day_level" />
@@ -37,6 +37,7 @@
       </span>
     </template>
   </app-table>
+  {{ randomString() }}
 </template>
 
 <script>
@@ -44,6 +45,8 @@ import { defineComponent } from "vue";
 import StarMeter from "@/components/StarMeter.vue";
 import AppTable from "@/components/AppTable.vue"
 import { orderBy, get } from "lodash";
+import zalgo from "zalgo-js";
+
 
 export default defineComponent({
   components: { StarMeter, AppTable },
@@ -118,6 +121,22 @@ export default defineComponent({
       let random = Math.floor(Math.random() * 4000000);
       return `0x` + padStart(random.toString(16), 8, "0");
     },
+
+    zalgoText() {
+      const myString = this.randomString(2, 5)
+      return zalgo(myString, { intensity: 0.6, directions: {up: true, down: true, middle: true} });
+    },
+
+    randomString(min, max) {
+      let string = ''
+      let length = Math.floor(Math.random() * (max - 1)) + min  
+      for(let i=0; i < length; i++) {
+        let ascii = Math.floor(Math.random() * 25) + 97
+        console.log(ascii, length)
+        string += String.fromCharCode(ascii)
+      }
+      return string
+    }
   },
 });
 </script>

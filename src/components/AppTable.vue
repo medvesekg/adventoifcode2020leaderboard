@@ -111,6 +111,7 @@ export default {
       let columns = this.actualColumns.filter((column) => {
         return this.currentOrderBy.column.includes(column.name);
       });
+      
       if (columns && columns.length) {
         rows = orderBy(
           rows,
@@ -134,10 +135,15 @@ export default {
       if (column.orderable === false) return;
 
       let oldColumn = this.currentOrderBy.column[0];
+      let oldDirection = this.currentOrderBy.direction[0];
 
+      this.currentOrderBy.column = []
+      this.currentOrderBy.direction = []
+     
       if (oldColumn === column.name) {
+        this.currentOrderBy.column[0] = column.name;
         this.currentOrderBy.direction[0] =
-          this.currentOrderBy.direction[0] === "asc" ? "desc" : "asc";
+          oldDirection === "asc" ? "desc" : "asc";
       } else {
         this.currentOrderBy.column[0] = column.name;
         this.currentOrderBy.direction[0] = "asc";

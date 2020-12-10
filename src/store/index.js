@@ -165,7 +165,7 @@ export default createStore({
 
   getters: {
     maxDay(state, getters) {
-      let max = maxBy(getters.results, 'day')
+      let max = maxBy(getters.results, item => parseInt(item.day))
       return max ? max.day : 0
     },
 

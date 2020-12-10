@@ -128,14 +128,15 @@ export default {
     },
     earlyBird() {
       let early = this.$store.getters.results.filter((result) => {
+        let date = new Date(result.end)
         return (
           isAfter(
-            new Date(result.end),
-            new Date(2020, 11, result.day, 4, 0, 0, 0)
+            date,
+            new Date(2020, 11, date.getDate(), 4, 0, 0, 0)
           ) &&
           isBefore(
-            new Date(result.end),
-            new Date(2020, 11, result.day, 8, 0, 0, 0)
+            date,
+            new Date(2020, 11, date.getDate(), 8, 0, 0, 0)
           )
         );
       });
@@ -150,22 +151,25 @@ export default {
     },
     lateBird() {
       let late = this.$store.getters.results.filter((result) => {
+        let date = new Date(result.end)
         return (
+          
           isAfter(
-            new Date(result.end),
-            new Date(2020, 11, result.day, 22, 0, 0, 0)
+            date,
+            new Date(2020, 11, date.getDate(), 22, 0, 0, 0)
           ) &&
           isBefore(
-            new Date(result.end),
-            new Date(2020, 11, result.day + 1, 4, 0, 0, 0)
+            date,
+            new Date(2020, 11, date.getDate() + 1, 4, 0, 0, 0)
           )
         );
       });
-      late = countBy(late, "userId");
-      let array = Object.entries(late).map(([userId, count]) => {
+
+      let array = Object.entries(countBy(late, "userId")).map(([userId, count]) => {
         return {
           userId: userId,
           count: count,
+          late: late.filter(late => late.userId === userId)
         };
       });
       return orderBy(array, ["count"], ["desc"]);

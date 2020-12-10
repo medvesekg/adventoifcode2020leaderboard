@@ -140,7 +140,10 @@ let usersAdditionalData = {
   },
   1133114: { 
     userId: "1133114", 
-    name: "anrik" },
+    name: "anrik",
+    avatar: "https://cdn.discordapp.com/avatars/771342052146544651/67950d811bb64fd35d616e2facdf918d.png?size=128", 
+    department_id: 3
+  },
 
     1229442: { 
     userId: "1229442", 

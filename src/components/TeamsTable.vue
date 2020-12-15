@@ -19,15 +19,14 @@
       />
     </template>
     <template #column:stars="{ row }">
-      <span class="fa-stack text-center" :key="row.id">
-        <i class="fas fa-star fa-2x text-yellow-500"></i>
-        <span class="fa-layers-text text-lg font-bold text-gray-100">{{
-          row.stars
-        }}</span>
+      <span :key="row.id">
+          {{ row.stars }}
       </span>
     </template>
     <template #column:avg_stars="{ value }">
-      {{ value.toFixed(2) }}
+      <span class="text-lg font-bold">
+        {{ value.toFixed(2) }}
+      </span>
     </template>
   </app-table>
 </template>

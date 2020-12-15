@@ -1,6 +1,6 @@
 <template>
     <div>
-      <personal-table  />
+      <teams-table  />
       
       <h2
         class="text-center my-20 text-3xl font-semibold text-gray-800 md:text-4xl"
@@ -77,7 +77,7 @@
 </template>
 
 <script>
-import PersonalTable from "@/components/PersonalTable.vue";
+import TeamsTable from "@/components/TeamsTable.vue";
 import AppAchievement from "@/components/AppAchievement.vue";
 import { orderBy, minBy, countBy, groupBy, padStart, get } from "lodash";
 import { format } from 'date-fns'
@@ -91,7 +91,7 @@ import {
 import StarMeter from "@/components/StarMeter.vue";
 
 export default {
-  components: { PersonalTable, AppAchievement },
+  components: { TeamsTable, AppAchievement },
 
   data() {
     return {

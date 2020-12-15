@@ -27,13 +27,11 @@
     </template>
     <template #column:starMeter="{ row }">
       <star-meter :results="row.completion_day_level" />
+      <i class="fa fa-gift ml-5" v-if="row.stars > targetUser.stars"></i>
     </template>
     <template #column:stars="{ row }">
-      <span class="fa-stack text-center">
-        <i class="fas fa-star fa-2x text-yellow-500"></i>
-        <span class="fa-layers-text text-lg font-bold text-gray-100">{{
-          row.stars
-        }}</span>
+      <span class="text-lg font-bold">
+        {{ row.stars }}
       </span>
     </template>
   </app-table>
@@ -98,6 +96,9 @@ export default defineComponent({
   },
 
   computed: {
+    targetUser() {
+      return this.$store.getters.users[34892]
+    },
     rows() {
       return orderBy(
         Object.values(this.$store.getters.users),
@@ -132,7 +133,6 @@ export default defineComponent({
       let length = Math.floor(Math.random() * (max - 1)) + min  
       for(let i=0; i < length; i++) {
         let ascii = Math.floor(Math.random() * 25) + 97
-        console.log(ascii, length)
         string += String.fromCharCode(ascii)
       }
       return string

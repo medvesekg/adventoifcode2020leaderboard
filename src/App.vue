@@ -1,14 +1,28 @@
 <template>
-  <router-view />
-  <div class="mt-5 text-center">
-    <a href="https://adventofcode.com/2020/leaderboard/private/view/34892">Advent of code 2020</a>
-  </div>
+  <component :is="layout">
+    <keep-alive>
+      <router-view />
+    </keep-alive>
+  </component>
 </template>
 
 <script>
 import data from '@/data/data.js'
+import DefaultLayout from '@/layouts/default.vue'
+import EmptyLayout from '@/layouts/empty.vue'
 
 export default {
   name: 'App',
+
+  components: {
+    default: DefaultLayout,
+    empty: EmptyLayout
+  },
+
+  computed: {
+    layout() {
+      return this.$route.meta.layout || 'default'
+    }
+  }
 }
 </script>

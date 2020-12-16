@@ -1,14 +1,6 @@
 <template>
-    <div>
-      <personal-table  />
-      
-      <h2
-        class="text-center my-20 text-3xl font-semibold text-gray-800 dark:text-gray-200 md:text-4xl"
-      >
-        Achievements
-      </h2>
-
-      <app-achievement
+  <div>
+    <app-achievement
       class="mb-5"
         title="Fastest gun in the west"
         description="to solve the first challenge"
@@ -73,11 +65,10 @@
         icon="/src/assets/monkey.jpg"
 
       />
-    </div>
+  </div>
 </template>
 
 <script>
-import PersonalTable from "@/components/PersonalTable.vue";
 import AppAchievement from "@/components/AppAchievement.vue";
 import { orderBy, minBy, countBy, groupBy, padStart, get } from "lodash";
 import { format } from 'date-fns'
@@ -88,17 +79,10 @@ import {
   isAfter,
   startOfDay,
 } from "date-fns";
-import StarMeter from "@/components/StarMeter.vue";
 
 export default {
-  components: { PersonalTable, AppAchievement },
+  components: { AppAchievement },
 
-  data() {
-    return {
-      table: 'PersonalTable'
-    }
-  },
-  
   computed: {
     
     fastest() {
@@ -188,7 +172,10 @@ export default {
     formatDuration,
     format,
   },
-};
+
+}
 </script>
 
-<style></style>
+<style>
+
+</style>

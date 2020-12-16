@@ -4,17 +4,17 @@
     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
       <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
         <div
-          class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg"
+          class="shadow overflow-hidden border-b border-gray-200 dark:border-gray-900 sm:rounded-lg"
         >
-          <table class="divide-y divide-gray-200 min-w-full">
-            <thead class="bg-gray-50">
+          <table class="divide-y divide-gray-200 min-w-full dark:divide-gray-900">
+            <thead class="bg-gray-50 dark:bg-gray-700">
               <tr>
                 <th
                   v-for="(column, i) in actualColumns"
                   :key="i"
                   @click="changeOrderBy(column)"
                   scope="col"
-                  :class="column.class"
+                  :class="column.thClass"
                   :style="column.style"
                   class="px-1 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
@@ -22,12 +22,13 @@
                 </th>
               </tr>
             </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
+            <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-900">
               <tr v-for="(row, i) in actualRows" :style="rowStyle(row)" :key="i">
                 <td
                   v-for="(column, j) in actualColumns"
                   :key="j"
                   class="px-1 py-1 whitespace-nowrap"
+                  :class="column.tdClass"
                 >
                   <slot
                     :name="`column:${column.slot}`"

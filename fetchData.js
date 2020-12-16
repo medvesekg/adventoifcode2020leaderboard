@@ -8,6 +8,7 @@ axios.get('https://adventofcode.com/2020/leaderboard/private/view/34892.json', {
     Cookie: 'session=' + process.env.SESSION_ID
   }
 }).then(response => {
+  response.data.timestamp = Date.now()
   fs.writeFile('src/data/data.js', 'export default ' + JSON.stringify(response.data), function(e) {
     console.log(e)
   })

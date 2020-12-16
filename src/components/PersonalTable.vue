@@ -35,7 +35,6 @@
       </span>
     </template>
   </app-table>
-  {{ randomString() }}
 </template>
 
 <script>
@@ -76,16 +75,20 @@ export default defineComponent({
           name: "team",
           orderable: false,
           style: "width:150px",
+          tdClass: 'hidden md:table-cell',
+          thClass: 'hidden md:table-cell'
         },
         {
-          label: "Stars",
+          label: "",
           accessor: "stars",
           slot: "starMeter",
           name: "starMeter",
           orderable: false,
+          tdClass: 'hidden md:table-cell',
+          thClass: 'hidden md:table-cell'
         },
         {
-          label: "",
+          label: "Stars",
           accessor: "stars",
           slot: "stars",
           name: "stars",

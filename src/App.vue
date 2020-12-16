@@ -22,6 +22,9 @@ export default {
   computed: {
     layout() {
       return this.$route.meta.layout || 'default'
+    },
+    store() {
+      return this.$store.state
     }
   }
 }

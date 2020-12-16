@@ -3,7 +3,7 @@
       <teams-table  />
       
       <h2
-        class="text-center my-20 text-3xl font-semibold text-gray-800 md:text-4xl"
+        class="text-center my-20 text-3xl font-semibold text-gray-800 dark:text-gray-200 md:text-4xl"
       >
         Achievements
       </h2>

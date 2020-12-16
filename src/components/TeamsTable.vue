@@ -49,7 +49,7 @@ export default defineComponent({
           slot: "name",
           name: "name",
           orderable: false,
-          style: "width:300px",
+          style: "width:200px",
         },
         {
           label: "Members",
@@ -57,6 +57,8 @@ export default defineComponent({
           slot: "members",
           name: "members",
           orderable: false,
+          tdClass: 'hidden md:table-cell',
+          thClass: 'hidden md:table-cell'
         },
         {
           label: "Avg. per member",
